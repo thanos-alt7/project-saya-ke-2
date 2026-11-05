@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,6 +23,8 @@ Route::prefix('post')->name('post.')->middleware('auth')->group(function () {
     Route::get('/admin-test', function () {
         return 'Selamat datang, Admin!';
     })->middleware('admin')->name('admin-test');
+
+    Route::resource('dashboard', DashboardController::class);
 });
 
 Route::get('/dashboard', function () {
