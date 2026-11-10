@@ -8,7 +8,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('posts.dashboard', [
+        return view('post.dashboard', [
             'totalProjects'     => Project::count(),
             'totalCategories'   => Category::count(),
             'totalTechnologies' => Technology::count(),
