@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
 use App\Models\ProjectImage;
+use App\Models\Skill;
 
 class Project extends Model
 {
@@ -23,5 +24,11 @@ class Project extends Model
     {
         return $this->hasMany(ProjectImage::class)
             ->orderBy('sort_order');
+    }
+
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class)
+            ->withTimestamps();
     }
 }

@@ -30,10 +30,18 @@
 
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     @forelse ($project->images as $image)
-                    <img
-                        src="{{ asset('storage/' . $image->image) }}"
-                        alt="{{ $image->caption ?: $project->name }}"
-                        class="w-full h-40 object-cover rounded">
+                    <div>
+                        <img
+                            src="{{ asset('storage/' . $image->image) }}"
+                            alt="{{ $image->caption ?: $project->name }}"
+                            class="w-full h-40 object-cover rounded">
+
+                        @if ($image->caption)
+                        <p class="mt-2 text-gray-700 text-sm">
+                            {{ $image->caption }}
+                        </p>
+                        @endif
+                    </div>
                     @empty
                     <p>Belum ada gambar gallery.</p>
                     @endforelse

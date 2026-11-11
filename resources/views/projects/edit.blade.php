@@ -107,6 +107,27 @@
                             class="w-full h-32 object-cover rounded"
                             alt="Gallery Project">
 
+                        <form action="{{ route('post.projects.gallery.update', [$project->id, $image->id]) }}" method="POST" class="mt-2">
+                            @csrf
+                            @method('PUT')
+
+                            <input
+                                type="text"
+                                name="caption"
+                                value="{{ old('caption', $image->caption) }}"
+                                placeholder="Caption gambar"
+                                class="w-full border rounded p-2">
+
+                            @error('caption')
+                            <p class="text-red-500 text-sm">{{ $message }}</p>
+                            @enderror
+
+                            <button type="submit"
+                                class="bg-blue-600 text-white px-3 py-2 rounded w-full mt-3 block">
+                                Simpan Caption
+                            </button>
+                        </form>
+
                         <form action="{{ route('post.projects.gallery.destroy', [$project->id, $image->id]) }}"
                             method="POST"
                             onsubmit="return confirm('Hapus gambar ini?')"

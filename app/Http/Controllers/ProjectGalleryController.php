@@ -11,9 +11,18 @@ class ProjectGalleryController extends Controller
 {
     public function store(Request $request, Project $project)
     {
+        $currentCount = $project->images()->count();
+        $remaining = 10 - $currentCount;
+
+        if ($remaining <= 0) {
+            return back()->withErrors([
+                'images' => 'Project sudah mencapai batas maksimal 10 gambar.'
+            ]);
+        }
+
         $validated = $request->validate([
-            'images' => 'required|array',
-            'images.*' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'images' => 'required|array|max:' .$remaining,
+            'images.*' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048|dimensions:min_width=100',
         ]);
 
         foreach ($request->file('images') as $index => $image) {
@@ -36,5 +45,18 @@ class ProjectGalleryController extends Controller
         $image->delete();
 
         return back()->with('success', 'Gambar gallery berhasil dihapus.');
+    }
+
+    public function update(Request $request, Project $project, ProjectImage $image)
+    {
+        abort_unless($image->project_id === $project->id, 404);
+
+        $validated = $request->validate([
+            'caption' => 'nullable|string|max:255',
+        ]);
+
+        $image->update($validated);
+
+        return back()->with('success', 'Caption gallery berhasil diperbarui.');
     }
 }

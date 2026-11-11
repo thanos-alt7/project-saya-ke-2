@@ -6,6 +6,7 @@ use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectGalleryController;
 use App\Http\Controllers\PortfolioController;
+use App\Http\Controllers\SkillController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,6 +34,9 @@ Route::prefix('post')->name('post.')->middleware('auth')->group(function () {
         'projects/{project}/gallery/{image}',
         [ProjectGalleryController::class, 'destroy']
     )->name('projects.gallery.destroy');
+
+    Route::put('projects/{project}/gallery/{image}', [ProjectGalleryController::class, 'update'])
+        ->name('projects.gallery.update');
 });
 
 Route::get('/dashboard', function () {
@@ -43,6 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::resource('skills', SkillController::class)->only(['index', 'edit', 'update']);
 });
 
 Route::get('/projects', [PortfolioController::class, 'projects'])
