@@ -14,10 +14,46 @@
             </div>
             @endif
 
-            <a href="{{ route('post.projects.create') }}"
-                class="inline-block bg-blue-600 text-white px-4 py-2 rounded mb-4">
-                Tambah Project
-            </a>
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+
+                <a href="{{ route('post.projects.create') }}"
+                    class="inline-block bg-blue-600 text-white px-4 py-2 rounded">
+                    Tambah Project
+                </a>
+
+                {{-- Search dan Filter Status --}}
+                <form action="{{ route('post.projects.index') }}" method="GET"
+                    class="flex flex-wrap items-center gap-2">
+
+                    <input
+                        type="text"
+                        name="search"
+                        value="{{ request('search') }}"
+                        placeholder="Cari nama project..."
+                        class="border-gray-300 rounded-md">
+
+                    <select name="status" class="border-gray-300 rounded-md">
+                        <option value="">Semua Status</option>
+                        <option value="draft" {{ request('status') == 'draft' ? 'selected' : '' }}>
+                            Draft
+                        </option>
+                        <option value="published" {{ request('status') == 'published' ? 'selected' : '' }}>
+                            Published
+                        </option>
+                    </select>
+
+                    <button type="submit"
+                        class="bg-blue-600 text-white px-4 py-2 rounded">
+                        Cari
+                    </button>
+
+                    <a href="{{ route('post.projects.index') }}"
+                        class="bg-gray-200 text-gray-700 px-4 py-2 rounded">
+                        Reset
+                    </a>
+                </form>
+
+            </div>
 
             <div class="bg-white rounded-lg shadow overflow-x-auto">
                 <table class="w-full text-left">
@@ -85,6 +121,12 @@
                     </tbody>
                 </table>
             </div>
+            
+            {{-- Pagination --}}
+            <div class="mt-6">
+                {{ $projects->links() }}
+            </div>
+            
         </div>
     </div>
 </x-app-layout>

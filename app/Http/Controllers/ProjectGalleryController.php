@@ -22,7 +22,7 @@ class ProjectGalleryController extends Controller
 
         $validated = $request->validate([
             'images' => 'required|array|max:' .$remaining,
-            'images.*' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048|dimensions:min_width=100',
+            'images.*' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048|dimensions:min_width=800',
         ]);
 
         foreach ($request->file('images') as $index => $image) {

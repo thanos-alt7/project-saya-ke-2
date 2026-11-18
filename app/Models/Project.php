@@ -9,11 +9,21 @@ use App\Models\Skill;
 
 class Project extends Model
 {
+
     protected $fillable = [
         'name',
+        'slug',
         'category_id',
-        'thumbnail'
+        'short_description',
+        'description',
+        'status',
+        'project_date',
+        'is_featured',
+        'project_url',
+        'repository_url',
+        'thumbnail',
     ];
+
 
     public function category()
     {

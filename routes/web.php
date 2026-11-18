@@ -53,7 +53,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/projects', [PortfolioController::class, 'projects'])
     ->name('projects');
 
-Route::get('/projects/{project}', [PortfolioController::class, 'show'])
+Route::get('/projects/{project:slug}', [PortfolioController::class, 'show'])
     ->name('projects.show');
 
 require __DIR__ . '/auth.php';

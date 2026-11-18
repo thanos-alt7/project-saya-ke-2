@@ -7,7 +7,7 @@ use App\Models\Project;
 
 class Category extends Model
 {
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'slug'];
 
     public function projects()
     {
