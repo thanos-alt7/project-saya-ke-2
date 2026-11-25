@@ -9,7 +9,7 @@
     <div class="py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <x-stat-card label="Total Projects" :value="$totalProjects" />
 
                 <x-stat-card
@@ -36,6 +36,16 @@
                     label="Skills"
                     :value="$totalSkills"
                     color="text-orange-600" />
+
+                <x-stat-card
+                    label="Total Messages"
+                    :value="$totalContacts"
+                    color="text-blue-600" />
+
+                <x-stat-card
+                    label="Unread Messages"
+                    :value="$unreadContacts"
+                    color="text-red-600" />
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">

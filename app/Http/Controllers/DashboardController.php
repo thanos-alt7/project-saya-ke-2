@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Category, Project, Skill, Technology};
+use App\Models\{Category, Project, Skill, Technology, Contact};
 
 class DashboardController extends Controller
 {
@@ -20,6 +20,12 @@ class DashboardController extends Controller
             'totalCategories' => Category::count(),
             'totalTechnologies' => Technology::count(),
             'totalSkills' => Skill::count(),
+
+            // Total pesan masuk
+            'totalContacts' => Contact::count(),
+
+            // Jumlah pesan yang belum dibaca
+            'unreadContacts' => Contact::where('is_read', false)->count(),
 
             // Lima project terbaru
             'latestProjects' => Project::with('category')

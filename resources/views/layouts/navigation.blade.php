@@ -23,6 +23,13 @@
                         Dashboard Atmin
                     </x-nav-link>
 
+                    <!-- Messages -->
+                    <x-nav-link
+                        :href="route('post.contacts.index')"
+                        :active="request()->routeIs('post.contacts.*')">
+                        Messages
+                    </x-nav-link>
+
                 </div>
             </div>
 
@@ -85,7 +92,14 @@
                 :active="request()->routeIs('post.dashboard.*')">
                 Dashboard Admin
             </x-responsive-nav-link>
-            
+
+            <!-- Messages -->
+            <x-responsive-nav-link
+                :href="route('post.contacts.index')"
+                :active="request()->routeIs('post.contacts.*')">
+                Messages
+            </x-responsive-nav-link>
+
         </div>
 
         <!-- Responsive Settings Options -->

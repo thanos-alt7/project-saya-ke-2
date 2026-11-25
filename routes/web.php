@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectGalleryController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\SkillController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ContactAdminController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -37,6 +39,9 @@ Route::prefix('post')->name('post.')->middleware('auth')->group(function () {
 
     Route::put('projects/{project}/gallery/{image}', [ProjectGalleryController::class, 'update'])
         ->name('projects.gallery.update');
+
+    Route::resource('contacts', ContactAdminController::class)
+        ->only(['index', 'show']);
 });
 
 Route::get('/dashboard', function () {
@@ -55,5 +60,12 @@ Route::get('/projects', [PortfolioController::class, 'projects'])
 
 Route::get('/projects/{project:slug}', [PortfolioController::class, 'show'])
     ->name('projects.show');
+
+Route::get('/contact', [ContactController::class, 'create'])
+    ->name('contact');
+
+Route::post('/contact', [ContactController::class, 'store'])
+    ->middleware('throttle:contact')
+    ->name('contact.store');
 
 require __DIR__ . '/auth.php';
