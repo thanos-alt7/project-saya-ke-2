@@ -10,9 +10,8 @@ use App\Http\Controllers\SkillController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ContactAdminController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [PortfolioController::class, 'home'])
+    ->name('home');
 
 Route::prefix('post')->name('post.')->middleware('auth')->group(function () {
 

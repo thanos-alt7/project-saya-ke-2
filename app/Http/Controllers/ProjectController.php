@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use App\Models\Skill;
+use Illuminate\Support\Facades\Cache;
 
 class ProjectController extends Controller
 {
@@ -70,6 +71,8 @@ class ProjectController extends Controller
         $project = Project::create($validated);
         $project->skills()->sync($skillIds);
 
+        Cache::forget('portfolio.featured');
+
         return redirect()->route('post.projects.index')
             ->with('success', 'Project berhasil ditambahkan.');
     }
@@ -120,6 +123,8 @@ class ProjectController extends Controller
         $project->update($validated);
         $project->skills()->sync($skillIds);
 
+        Cache::forget('portfolio.featured');
+
         return redirect()->route('post.projects.index')
             ->with('success', 'Project berhasil diperbarui.');
     }
@@ -136,6 +141,8 @@ class ProjectController extends Controller
         }
 
         $project->delete();
+
+        Cache::forget('portfolio.featured');
 
         return redirect()->route('post.projects.index')
             ->with('success', 'Project berhasil dihapus.');

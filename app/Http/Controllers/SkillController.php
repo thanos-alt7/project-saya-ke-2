@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Skill;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class SkillController extends Controller
 {
@@ -26,6 +27,8 @@ class SkillController extends Controller
         ]);
 
         $skill->update($validated);
+
+        Cache::forget('portfolio.skills');
 
         return redirect()
             ->route('skills.index')

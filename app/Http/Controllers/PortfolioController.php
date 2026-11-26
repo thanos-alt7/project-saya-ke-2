@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\Category;
 use App\Models\Skill;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class PortfolioController extends Controller
 {
@@ -58,7 +59,12 @@ class PortfolioController extends Controller
 
         $projects = $query->paginate(9)->withQueryString();
 
-        $categories = Category::orderBy('name')->get();
+        $categories = Cache::remember(
+            'portfolio.categories',
+            3600,
+            fn() =>
+            Category::orderBy('name')->get()
+        );
         $skills = Skill::orderBy('name')->get();
 
         return view('projects', compact(
@@ -73,5 +79,27 @@ class PortfolioController extends Controller
         $project->load(['category', 'images', 'skills']);
 
         return view('portofolio.project', compact('project'));
+    }
+
+    public function home()
+    {
+        $featured = Cache::remember(
+            'portfolio.featured',
+            1800,
+            fn() =>
+            Project::with('category')
+                ->where('status', 'published')
+                ->where('is_featured', true)
+                ->latest()->take(6)->get()
+        );
+
+        $skills = Cache::remember(
+            'portfolio.skills',
+            3600,
+            fn() =>
+            Skill::orderBy('name')->get()
+        );
+
+        return view('portofolio.home', compact('featured', 'skills'));
     }
 }
